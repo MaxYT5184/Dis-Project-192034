@@ -1,45 +1,38 @@
-const savedServer = localStorage.getItem("pinnedServer");
-const savedWebhook = localStorage.getItem("pinnedWebhook");
 const correctPassword = "DevSMY";
+const backupPin = "Dev";
 
-// Authenticate User
 function authenticate() {
     const enteredPassword = document.getElementById("password").value;
-    if (enteredPassword === correctPassword) {
+    if (enteredPassword === correctPassword || enteredPassword === backupPin) {
         document.getElementById("builder").style.display = "block";
     } else {
-        alert("Incorrect password!");
+        alert("Incorrect password or PIN!");
     }
 }
 
-// Pin Selected Server & Save Webhook URL
 function pinServer() {
     const serverSelect = document.getElementById("server-select");
     const selectedServerId = serverSelect.value;
     const webhookURL = document.getElementById("webhook-url").value.trim();
 
     if (!webhookURL) {
-        alert("Please enter a webhook URL before pinning!");
+        alert("Enter a webhook URL before pinning!");
         return;
     }
 
-    // Save pinned server and webhook URL
     localStorage.setItem("pinnedServer", selectedServerId);
     localStorage.setItem("pinnedWebhook", webhookURL);
-    alert(`Pinned ${serverSelect.options[serverSelect.selectedIndex].text} with webhook.`);
+    alert(`Pinned ${serverSelect.options[serverSelect.selectedIndex].text}`);
 }
 
-// Auto-load pinned server & webhook on page load
 document.addEventListener("DOMContentLoaded", () => {
-    if (savedServer) {
-        document.getElementById("server-select").value = savedServer;
-    }
-    if (savedWebhook) {
-        document.getElementById("webhook-url").value = savedWebhook;
-    }
+    const savedServer = localStorage.getItem("pinnedServer");
+    const savedWebhook = localStorage.getItem("pinnedWebhook");
+
+    if (savedServer) document.getElementById("server-select").value = savedServer;
+    if (savedWebhook) document.getElementById("webhook-url").value = savedWebhook;
 });
 
-// Send Webhook Message
 document.getElementById("send-webhook").addEventListener("click", () => {
     const webhookURL = document.getElementById("webhook-url").value.trim();
     const messageContent = document.getElementById("message-content").value.trim();
@@ -49,18 +42,43 @@ document.getElementById("send-webhook").addEventListener("click", () => {
         return;
     }
 
-    const payload = { content: messageContent };
-
     fetch(webhookURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ content: messageContent })
     })
     .then(response => {
-        if(response.ok) {
-            alert("Message sent successfully!");
-        } else {
-            alert("Error sending message.");
-        }
+        if(response.ok) alert("Message sent successfully!");
+        else alert("Error sending message.");
     });
+});
+
+document.getElementById("add-embed").addEventListener("click", () => {
+    const title = document.getElementById("embed-title").value;
+    const description = document.getElementById("embed-description").value;
+    const color = document.getElementById("embed-color").value.replace("#", "");
+
+    document.getElementById("preview").innerHTML = `<p><strong>Embed Preview:</strong> ${title} - ${description}</p>`;
+});
+
+document.getElementById("schedule-webhook").addEventListener("click", () => {
+    const webhookURL = document.getElementById("webhook-url").value.trim();
+    const messageContent = document.getElementById("message-content").value.trim();
+    const scheduleTime = new Date(document.getElementById("schedule-time").value).getTime();
+
+    if (!webhookURL || !messageContent || isNaN(scheduleTime)) {
+        alert("Enter valid webhook, message, and schedule time!");
+        return;
+    }
+
+    setTimeout(() => {
+        fetch(webhookURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: messageContent })
+        })
+        .then(response => response.ok ? alert("Scheduled Message Sent!") : alert("Error Sending!"));
+    }, scheduleTime - Date.now());
+
+    alert("Message scheduled!");
 });
