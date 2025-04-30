@@ -9,6 +9,39 @@
 <body>
     <div class="container">
         <h1>Webhook Message Builder</h1>
+
+        <label for="server-select">Select Server:</label>
+        <select id="server-select">
+            <option value="1362193917759590551">Max Dev Server</option>
+            <option value="1100631355571834922">Stephen Server</option>
+        </select>
+
+        <label for="webhook-url">Webhook URL:</label>
+        <input type="text" id="webhook-url" placeholder="Enter your webhook URL">
+
+        <label for="message-content">Message Content:</label>
+        <textarea id="message-content" placeholder="Enter your message"></textarea>
+
+        <button id="add-embed">Add Embed</button>
+        <button id="send-webhook">Send Webhook</button>
+
+        <div id="preview"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Webhook Message Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Webhook Message Builder</h1>
         <label for="webhook-url">Webhook URL:</label>
         <input type="text" id="webhook-url" placeholder="Enter your webhook URL">
 
