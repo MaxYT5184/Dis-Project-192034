@@ -2,6 +2,7 @@ const savedServer = localStorage.getItem("pinnedServer");
 const savedWebhook = localStorage.getItem("pinnedWebhook");
 const correctPassword = "DevSMY";
 
+// Authenticate User
 function authenticate() {
     const enteredPassword = document.getElementById("password").value;
     if (enteredPassword === correctPassword) {
@@ -11,16 +12,24 @@ function authenticate() {
     }
 }
 
+// Pin Selected Server & Save Webhook URL
 function pinServer() {
     const serverSelect = document.getElementById("server-select");
     const selectedServerId = serverSelect.value;
-    
-    // Save pinned server
+    const webhookURL = document.getElementById("webhook-url").value.trim();
+
+    if (!webhookURL) {
+        alert("Please enter a webhook URL before pinning!");
+        return;
+    }
+
+    // Save pinned server and webhook URL
     localStorage.setItem("pinnedServer", selectedServerId);
-    alert(`Pinned ${serverSelect.options[serverSelect.selectedIndex].text} as default.`);
+    localStorage.setItem("pinnedWebhook", webhookURL);
+    alert(`Pinned ${serverSelect.options[serverSelect.selectedIndex].text} with webhook.`);
 }
 
-// Auto-load pinned webhook on page load
+// Auto-load pinned server & webhook on page load
 document.addEventListener("DOMContentLoaded", () => {
     if (savedServer) {
         document.getElementById("server-select").value = savedServer;
@@ -30,10 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Send Webhook Message
 document.getElementById("send-webhook").addEventListener("click", () => {
     const webhookURL = document.getElementById("webhook-url").value.trim();
     const messageContent = document.getElementById("message-content").value.trim();
-    
+
     if (!webhookURL || !messageContent) {
         alert("Webhook URL and message cannot be empty!");
         return;
@@ -53,8 +63,4 @@ document.getElementById("send-webhook").addEventListener("click", () => {
             alert("Error sending message.");
         }
     });
-});
-
-document.getElementById("add-embed").addEventListener("click", () => {
-    document.getElementById("preview").innerHTML = "<p><strong>Embed Added:</strong> Customize in JSON</p>";
 });
