@@ -1,29 +1,82 @@
+/* General Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #2C2F33;
-    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e1e2f, #23272A);
+    color: white;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
+/* Container for Main Content */
 .container {
-    width: 50%;
-    margin: auto;
+    width: 60%;
+    margin: 50px auto;
     padding: 20px;
-    background-color: #23272A;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    background: rgba(35, 39, 42, 0.9);
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease-in-out;
 }
 
-button {
-    background-color: #7289DA;
-    border: none;
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Input Fields */
+input, textarea, select {
+    width: 100%;
     padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+}
+
+/* Stylish Buttons */
+button {
+    background: linear-gradient(135deg, #7289DA, #5865F2);
+    border: none;
+    padding: 12px 15px;
+    font-size: 16px;
     color: white;
     cursor: pointer;
-    margin-top: 10px;
+    border-radius: 6px;
     transition: 0.3s ease-in-out;
 }
 
 button:hover {
-    background-color: #5B6EAE;
+    background: linear-gradient(135deg, #5B6EAE, #4D5AE5);
+    transform: scale(1.05);
+}
+
+/* Animated Embed Builder */
+.embed-builder {
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(44, 47, 51, 0.8);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    transition: 0.3s ease-in-out;
+}
+
+.embed-builder:hover {
+    transform: scale(1.02);
+}
+
+/* Message Preview */
+#preview {
+    margin-top: 20px;
+    padding: 10px;
+    background: #2C2F33;
+    border-radius: 8px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
 }
