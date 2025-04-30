@@ -28,9 +28,22 @@
             <label for="message-content">Message Content:</label>
             <textarea id="message-content" placeholder="Enter your message"></textarea>
 
-            <button id="add-embed">Add Embed</button>
-            <button id="send-webhook">Send Webhook</button>
+            <label for="schedule-time">Schedule Time:</label>
+            <input type="datetime-local" id="schedule-time">
+            <button id="schedule-webhook">Schedule Message</button>
 
+            <div class="embed-builder">
+                <h3>Embed Customization</h3>
+                <label for="embed-title">Title:</label>
+                <input type="text" id="embed-title">
+                <label for="embed-description">Description:</label>
+                <textarea id="embed-description"></textarea>
+                <label for="embed-color">Embed Color:</label>
+                <input type="color" id="embed-color">
+                <button id="add-embed">Add Embed</button>
+            </div>
+
+            <button id="send-webhook">Send Webhook</button>
             <div id="preview"></div>
         </div>
     </div>
